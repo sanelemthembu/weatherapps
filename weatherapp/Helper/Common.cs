@@ -1,4 +1,5 @@
 using Dapper;
+using JWT.Controllers;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,10 @@ namespace weatherapp
     public interface IHelper
     {
         Task<IEnumerable<WeatherDetails>> GetWeatherForecast(string date);
+        void Insert(string data);
+
+        UserModel GetUser(TokenController.LoginModel login);
+        bool CreateUser(UserModel user);
     }
 
     public class Helper : IHelper
@@ -34,6 +39,25 @@ namespace weatherapp
             var qu = $"SELECT* FROM weatherforecast WHERE forecast_datetime like '%{today}%'  or forecast_datetime like '%{yesterday}%'";            
             var res = await connection.QueryAsync<WeatherDetails>(qu);
             return res;
+        }
+
+        public void Insert(string data)
+        {
+            connection.Execute(data);
+        }
+
+        public bool CreateUser(UserModel user)
+        {
+            string stm = $"Insert into users (username, name, password, dob) values ('{user.Username}','{user.Name}','P@ssword123','{DateTime.Now.ToString()}');";
+            connection.Execute(stm);
+            return true;
+        }
+
+        public UserModel GetUser(TokenController.LoginModel login)
+        {
+            string stm = $"SELECT * from users where username = '{login.Username}' and password = '{login.Password}';";
+            var user = connection.QueryFirstOrDefault<UserModel>(stm);
+            return user;
         }
     }
 }

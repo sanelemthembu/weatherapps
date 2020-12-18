@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +20,7 @@ namespace weatherapp.Controllers
             _helper = helper;
         }
 
-        [HttpGet]        
+        [HttpGet, Authorize]
         public Root Get()
         {
             var forecast = _helper.GetWeatherForecast("").GetAwaiter().GetResult();
@@ -29,7 +30,7 @@ namespace weatherapp.Controllers
             };
         }
 
-        [HttpGet("{date}")]
+        [HttpGet("{date}"), Authorize]
         public Root GetById(string date)
         {
             var forecast = _helper.GetWeatherForecast(date).GetAwaiter().GetResult();
