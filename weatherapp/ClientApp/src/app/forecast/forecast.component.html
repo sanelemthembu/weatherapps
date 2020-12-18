@@ -1,0 +1,23 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div>
+  <!-- <form action="/action_page.php">
+
+    <input type="submit" value="Submit">
+  </form> -->
+
+  <form #myForm="ngForm" (ngSubmit)="filterdates(myForm.value)">
+    <label for="date">Date:</label>
+    <input ngModel name="filterdate" type="date">
+    <input ngModel type="radio" id="hour" name="filterType" value="hour">
+    <label for="hour">Hour</label>
+    <input ngModel type="radio" id="day" name="filterType" value="day">
+    <label for="day">Day</label>
+    <button class="button" type="submit">Filter</button>
+  </form>
+
+</div>
+
+<div *ngIf="chart">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div>

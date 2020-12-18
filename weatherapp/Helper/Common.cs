@@ -48,7 +48,7 @@ namespace weatherapp
 
         public bool CreateUser(UserModel user)
         {
-            string stm = $"Insert into users (username, name, password, dob) values ('{user.Username}','{user.Name}','P@ssword123','{DateTime.Now.ToString()}');";
+            string stm = $"Insert into users (username, name, password) values ('{user.Username}','{user.Name}','P@ssword123');";
             connection.Execute(stm);
             return true;
         }
