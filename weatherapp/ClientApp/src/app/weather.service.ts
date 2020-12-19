@@ -14,7 +14,19 @@ export class WeatherService {
   }
 
   dailyForecastByFilter(val) {
-    return this._http.get("https://localhost:44331/weather/"+val.filterdate)
+
+    let headr = new HttpHeaders();
+    this._http.post("https://localhost:44331/api/token", { Username: "test", Password: "P@ssword123" })
+      .map(t => t)
+      .subscribe(t => {
+        console.log(t['token'])
+        headr = headr.set('Authorization', 'Bearer ' + t['token']);
+      });       
+
+    return this._http.get("https://localhost:44331/weather/" + val.filterdate,
+      {
+        headers: headr
+      })
       .map(result => result);
   }
 }

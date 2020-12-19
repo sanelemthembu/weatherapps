@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace weatherapp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class RegisterController : Controller
     {
         private IHelper _helper;
@@ -15,7 +15,7 @@ namespace weatherapp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserModel user)
+        public IActionResult CreateUser([FromBody] User user)
         {
             var created = _helper.CreateUser(user);
             return Ok(created);

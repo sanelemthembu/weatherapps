@@ -1,5 +1,4 @@
 using Dapper;
-using JWT.Controllers;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -11,15 +10,15 @@ namespace weatherapp
     {
         Task<IEnumerable<WeatherDetails>> GetWeatherForecast(string date);
         void Insert(string data);
-
-        UserModel GetUser(TokenController.LoginModel login);
-        bool CreateUser(UserModel user);
+        bool CreateUser(User user);
+        User GetUser(AuthenticateRequest login);
+        User GetUserByusername(string username);
+        List<User> GetUsers();
     }
 
     public class Helper : IHelper
     {
         private readonly SqliteConnection connection = new SqliteConnection("Data Source=test.db");
-
         public async Task<IEnumerable<WeatherDetails>> GetWeatherForecast(string date)
         {
             string yesterday;
@@ -36,7 +35,7 @@ namespace weatherapp
                 yesterday = DateTime.Now.AddDays(-1).ToString("yyyy/MM/d");
                 today = DateTime.Now.ToString("yyyy/MM/d");
             }
-            var qu = $"SELECT* FROM weatherforecast WHERE forecast_datetime like '%{today}%'  or forecast_datetime like '%{yesterday}%'";            
+            var qu = $"SELECT* FROM weatherforecast WHERE forecast_datetime like '%{today}%'  or forecast_datetime like '%{yesterday}%'";
             var res = await connection.QueryAsync<WeatherDetails>(qu);
             return res;
         }
@@ -46,18 +45,31 @@ namespace weatherapp
             connection.Execute(data);
         }
 
-        public bool CreateUser(UserModel user)
+        public bool CreateUser(User user)
         {
-            string stm = $"Insert into users (username, name, password) values ('{user.Username}','{user.Name}','P@ssword123');";
+            //Passwords will be hased in production
+            string stm = $"Insert into users (username, name, password, dob) values ('{user.Username}','{user.Name}','P@ssword123','{DateTime.Now.ToString()}');";
             connection.Execute(stm);
             return true;
         }
 
-        public UserModel GetUser(TokenController.LoginModel login)
+        public User GetUserByusername(string username)
+        {
+            string stm = $"SELECT * from users where username = '{username}';";
+            var user = connection.QueryFirstOrDefault<User>(stm);
+            return user;
+        }
+        public User GetUser(AuthenticateRequest login)
         {
             string stm = $"SELECT * from users where username = '{login.Username}' and password = '{login.Password}';";
-            var user = connection.QueryFirstOrDefault<UserModel>(stm);
+            var user = connection.QueryFirstOrDefault<User>(stm);
             return user;
+        }
+        public List<User> GetUsers()
+        {
+            string stm = $"SELECT * from users;";
+            var user = connection.Query<User>(stm);            
+            return user.AsList();
         }
     }
 }

@@ -7,12 +7,16 @@
   </form> -->
 
   <form #myForm="ngForm" (ngSubmit)="filterdates(myForm.value)">
+    <label for="username">Username:</label>
+    <input ngModel name="username" type="text">
+    <label for="password">Password:</label>
+    <input ngModel name="password" type="password"><br/>
     <label for="date">Date:</label>
-    <input ngModel name="filterdate" type="date">
+    <input ngModel name="filterdate" type="date"><br />
     <input ngModel type="radio" id="hour" name="filterType" value="hour">
     <label for="hour">Hour</label>
     <input ngModel type="radio" id="day" name="filterType" value="day">
-    <label for="day">Day</label>
+    <label for="day">Day</label><br />
     <button class="button" type="submit">Filter</button>
   </form>
 
