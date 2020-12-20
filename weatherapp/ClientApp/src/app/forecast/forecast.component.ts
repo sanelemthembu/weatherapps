@@ -78,7 +78,7 @@ export class ForecastComponent {
   }
 
   filterdates(val) {
-    console.log(val)
+
     this._weather.dailyForecastByFilter(val)
       .subscribe(res => {
 

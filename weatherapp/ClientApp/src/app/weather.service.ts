@@ -15,13 +15,10 @@ export class WeatherService {
 
   dailyForecastByFilter(val) {
 
+    console.log(val.token)
+
     let headr = new HttpHeaders();
-    this._http.post("https://localhost:44331/api/token", { Username: "test", Password: "P@ssword123" })
-      .map(t => t)
-      .subscribe(t => {
-        console.log(t['token'])
-        headr = headr.set('Authorization', 'Bearer ' + t['token']);
-      });       
+    headr = headr.set('Authorization', 'Bearer ' + val.token);
 
     return this._http.get("https://localhost:44331/weather/" + val.filterdate,
       {

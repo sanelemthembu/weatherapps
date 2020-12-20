@@ -1,16 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <div>
-  <!-- <form action="/action_page.php">
-
-    <input type="submit" value="Submit">
-  </form> -->
 
   <form #myForm="ngForm" (ngSubmit)="filterdates(myForm.value)">
-    <label for="username">Username:</label>
-    <input ngModel name="username" type="text">
-    <label for="password">Password:</label>
-    <input ngModel name="password" type="password"><br/>
+    <label for="token">Token:</label>
+    <input ngModel name="token" type="text"><br/>    
     <label for="date">Date:</label>
     <input ngModel name="filterdate" type="date"><br />
     <input ngModel type="radio" id="hour" name="filterType" value="hour">

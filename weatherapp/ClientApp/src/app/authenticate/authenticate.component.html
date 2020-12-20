@@ -1,0 +1,15 @@
+<h1>authenticate</h1>
+
+<div>
+
+  <form #myForm="ngForm" (ngSubmit)="auth(myForm.value)">
+    <label for="Username">Username:</label>
+    <input ngModel name="Username" type="text"><br />
+    <label for="password">Password:</label>
+    <input ngModel name="Password" placeholder="P@ssword123" type="password"><br />
+    <button class="button" type="submit">Authenticate</button>
+  </form>
+
+  Token: <label id="token"></label>
+
+</div>

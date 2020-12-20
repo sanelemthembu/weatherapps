@@ -42,7 +42,7 @@ namespace weatherapp
 
         public void Insert(string data)
         {
-            connection.Execute(data);
+            connection.ExecuteAsync(data).GetAwaiter().GetResult();
         }
 
         public bool CreateUser(User user)

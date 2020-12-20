@@ -26,7 +26,8 @@ namespace weatherapp.Controllers
         {
             var rng = new Random();
             var builder = new StringBuilder();
-            DateTime t = DateTime.Parse("2020/12/18 11:00:00 PM");
+            var today = DateTime.Now;
+            DateTime t = DateTime.Parse($"2020/12/{today.Date.Day} 11:00:00 PM");
 
             var loopTime = 0;
 
