@@ -81,7 +81,6 @@ export class ForecastComponent {
 
     this._weather.dailyForecastByFilter(val)
       .subscribe(res => {
-
         let allData = this.getGroupedData(res);
 
         let day1 = allData.day1
@@ -130,6 +129,7 @@ export class ForecastComponent {
       groups[date].push(f);
       return groups;
     }, {});
+
 
     let groupedData = {
       day1: groups[Object.keys(groups)[0]],

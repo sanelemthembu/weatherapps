@@ -14,6 +14,7 @@ import { WeatherService } from './weather.service';
 import { UserService } from './user.service';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
       { path: 'authenticate', component: AuthenticateComponent },
     ])
   ],
-  providers: [WeatherService, UserService],
+  providers: [WeatherService, UserService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

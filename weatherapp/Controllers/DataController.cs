@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace weatherapp.Controllers
@@ -10,57 +8,31 @@ namespace weatherapp.Controllers
     public class DataController : ControllerBase
     {
         private readonly ILogger<WeatherController> _logger;
-        private readonly IHelper _helper;
+        private readonly IDataSetup _dataSetup;
 
         public DataController(
             ILogger<WeatherController> logger,
-            IHelper helper
+            IDataSetup dataSetup
             )
         {
             _logger = logger;
-            _helper = helper;
+            _dataSetup = dataSetup;
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Data()
         {
-            var rng = new Random();
-            var builder = new StringBuilder();
-            var today = DateTime.Now;
-            DateTime t = DateTime.Parse($"2020/12/{today.Date.Day} 11:00:00 PM");
-
-            var loopTime = 0;
-
-            while (loopTime < 16)
+            _dataSetup.ClearData();
+            var generated = _dataSetup.GenerateData();
+            if (generated)
             {
-                for (int i = 0; i < 24; i++)
-                {
-                    var temp = rng.Next(10, 38);
-                    var minTemp = rng.Next(-5, 15);
-                    var desc = getDesc(temp);
-                    var data = $"INSERT INTO weatherforecast(description, temp, temp_min, temp_max, forecast_datetime) VALUES ('{desc}', {temp}, {minTemp}, {temp}, '{t}');";
-                    _helper.Insert(data);                    
-
-                    t = t.AddHours(-1);
-                }
-                t.AddDays(-1);
-                loopTime++;
+                return Ok(generated);
             }
-
-            return Ok();
-        }
-        private static string getDesc(int temp)
-        {
-            var d = "Hot";
-            if (temp < 15)
+            else
             {
-                return "Cold";
+                return BadRequest(generated);
             }
-            if (temp < 23)
-            {
-                return "Cool";
-            }
-            return d;
+            
         }
     }
 }

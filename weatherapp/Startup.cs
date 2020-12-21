@@ -18,11 +18,11 @@ namespace weatherapp
         }
 
         public IConfiguration Configuration { get; }
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors();            
+            services.AddSingleton<IDataSetup, DataSetup>();
             services.AddSingleton<IHelper, Helper>();
             services.AddScoped<IUserService, UserService>();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -33,6 +33,8 @@ namespace weatherapp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
