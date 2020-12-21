@@ -111,6 +111,12 @@ export class ForecastComponent {
         }
 
         this.renderChart(chartData);
+      }, error => {
+          console.log()
+          if (error.status == 401) {
+
+            window.alert("Authentication failed")
+          }
       })
   }
 

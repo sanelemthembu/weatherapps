@@ -7,6 +7,8 @@ export class WeatherService {
 
   constructor(private _http: HttpClient) { }
 
+  public responseCode:string
+
   dailyForecast() {
 
     return this._http.get("https://localhost:44331/weather")
@@ -15,15 +17,11 @@ export class WeatherService {
 
   dailyForecastByFilter(val) {
 
-    console.log(val.token)
-
     let headr = new HttpHeaders();
     headr = headr.set('Authorization', 'Bearer ' + val.token);
 
     return this._http.get("https://localhost:44331/weather/" + val.filterdate,
-      {
-        headers: headr
-      })
-      .map(result => result);
+      { headers: headr }
+    ).map(result => result);
   }
 }

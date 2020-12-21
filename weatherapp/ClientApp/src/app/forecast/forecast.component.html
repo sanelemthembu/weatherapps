@@ -4,7 +4,7 @@
 
   <form #myForm="ngForm" (ngSubmit)="filterdates(myForm.value)">
     <label for="token">Token:</label>
-    <input ngModel name="token" type="text"><br/>    
+    <input ngModel name="token" type="text"><br />
     <label for="date">Date:</label>
     <input ngModel name="filterdate" type="date"><br />
     <input ngModel type="radio" id="hour" name="filterType" value="hour">
@@ -14,6 +14,7 @@
     <button class="button" type="submit">Filter</button>
   </form>
 
+  <label id="results"></label>
 </div>
 
 <div *ngIf="chart">
